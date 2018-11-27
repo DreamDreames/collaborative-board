@@ -3,6 +3,6 @@ import Vue from 'vue'
 var app = new Vue({
     el: '#app',
     data: {
-        message: 'Hello Vue!'
+        message: 'Hello Vue sfsda1!'
     }
 });
