@@ -1,16 +1,11 @@
 var express = require('express');
-var Vue = require('vue');
+var path = require('path');
 var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  var app = new Vue({
-    el: '#app',
-    data: {
-      message: 'Hello Vue!'
-    }
-  });
-  //res.render('index', { title: 'Express' });
+    //res.render('index', { title: 'Express' });
+    res.sendFile(path.resolve('views/index.html'));
 });
 
 module.exports = router;
