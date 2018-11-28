@@ -1,5 +1,7 @@
 <template>
-    <codemirror v-model="code" :options="cmOption"></codemirror>
+    <codemirror v-model="code" 
+                :options="cmOption"
+                @input="onChange"></codemirror>
 </template>
 
 <script>
@@ -31,6 +33,11 @@ export default {
                   completeSingle: false
                 }
             }
+        }
+    },
+    methods: {
+        onChange: function(cm) {
+            console.log("updated", cm);
         }
     }
 }
