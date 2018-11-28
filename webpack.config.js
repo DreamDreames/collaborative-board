@@ -7,8 +7,9 @@ module.exports = {
         index: './public/js/index.js',
     },
     devtool: 'inline-source-map',
+    watch: true,
     devServer: {
-        contentBase: './public/dist'
+        contentBase: './public'
     },
     output: {
         filename: 'bundle.js',
