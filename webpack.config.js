@@ -4,7 +4,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 module.exports = {
     mode: 'development',
     entry: {
-        index: './public/js/index.js',
+        index: './public/javascripts/index.js',
     },
     devtool: 'inline-source-map',
     watch: true,
