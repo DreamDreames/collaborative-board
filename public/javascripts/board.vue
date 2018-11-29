@@ -16,6 +16,7 @@ export default {
     },
     data() {
         return {
+            socket: io(),
             code: 'const A = 10',
             cmOption: { 
                 tabSize: 4,
@@ -36,15 +37,27 @@ export default {
             }
         }
     },
+    created: function() {
+        var self = this;
+        this.socket.on('update', function (data) {
+            console.log("receiving message: ", data);
+            if(self.code == data.message) {
+                return;
+            }
+            self.code = data.message;
+        });
+    },
     methods: {
         onChange: function(cm) {
-            console.log("updated", cm); 
-            var socket = io(); 
-            socket.on('news', function (data) { 
-                console.log(data); 
-                socket.emit('my other event', { my: 'data' }); 
-            });
-        }
+            console.log("input changed: ", cm); 
+            this.socket.emit('update', {message: cm});
+        },
+        updateBoard: function(data) {
+            if(!data) {
+                return;
+            }
+            this.code = data.message;
+        },
     }
 }
 </script>
