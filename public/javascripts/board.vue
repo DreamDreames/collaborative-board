@@ -1,7 +1,9 @@
 <template>
-    <codemirror v-model="code" 
+    <codemirror ref='cm'
+                :value="code" 
                 :options="cmOption"
-                @input="onChange"></codemirror>
+                @change="onChange">
+    </codemirror>
 </template>
 
 <script>
@@ -18,6 +20,7 @@ export default {
         return {
             socket: io(),
             code: 'const A = 10',
+            status: '',
             cmOption: { 
                 tabSize: 4,
                 styleActiveLine: true,
@@ -41,16 +44,24 @@ export default {
         var self = this;
         this.socket.on('update', function (data) {
             console.log("receiving message: ", data);
-            if(self.code == data.message) {
-                return;
-            }
+            this.status = 'updating';
+            console.log("updating message: ", data);
             self.code = data.message;
         });
     },
+    mounted: function() {
+        this.$refs.cm.codemirror.on('change', this.onChange);
+    },
     methods: {
-        onChange: function(cm) {
-            console.log("input changed: ", cm); 
-            this.socket.emit('update', {message: cm});
+        onChange: function(cm, changeObj) {
+            console.log("input changed: ", cm.getValue()); 
+            if(changeObj.origin != 'setValue') {
+                console.log("emiting message: ", cm.getValue());
+                this.socket.emit('update', {message: cm.getValue()});
+            }
+            else {
+                console.log("not emiting message");
+            }
         },
         updateBoard: function(data) {
             if(!data) {
