@@ -20,7 +20,6 @@ export default {
         return {
             socket: io(),
             code: 'const A = 10',
-            status: '',
             cmOption: { 
                 tabSize: 4,
                 styleActiveLine: true,
@@ -43,9 +42,7 @@ export default {
     created: function() {
         var self = this;
         this.socket.on('update', function (data) {
-            console.log("receiving message: ", data);
-            this.status = 'updating';
-            console.log("updating message: ", data);
+            console.log("receiving message and updating: ", data);
             self.code = data.message;
         });
     },
@@ -62,13 +59,7 @@ export default {
             else {
                 console.log("not emiting message");
             }
-        },
-        updateBoard: function(data) {
-            if(!data) {
-                return;
-            }
-            this.code = data.message;
-        },
+        }
     }
 }
 </script>
