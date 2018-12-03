@@ -40,16 +40,30 @@ export default {
         }
     },
     created: function() {
-        var self = this;
-        this.socket.on('update', function (data) {
-            console.log("receiving message and updating: ", data);
-            self.code = data.message;
-        });
+        this.configureSocket();
     },
     mounted: function() {
         this.$refs.cm.codemirror.on('change', this.onChange);
     },
     methods: {
+        getBoardId: function() {
+            return 'abc';
+        },
+        joinBoard: function() {
+            let id = this.getBoardId();
+            this.socket.emit('join', {boardId: id});
+        },
+        listenUpdate: function() {
+            var self = this;
+            this.socket.on('update', function (data) {
+                console.log("receiving message and updating: ", data);
+                self.code = data.message;
+            });
+        },
+        configureSocket: function() {
+            this.joinBoard();
+            this.listenUpdate();
+        },
         onChange: function(cm, changeObj) {
             console.log("input changed: ", cm.getValue()); 
             if(changeObj.origin != 'setValue') {

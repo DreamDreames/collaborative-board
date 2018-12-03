@@ -1,4 +1,13 @@
 function onConnection(socket) {
+    socket.on('join', (data) => {
+        let boardId = data.boardId;
+        if(socket.boardId) {
+            socket.leave(socket.boardId);
+        }
+        socket.boardId = boardId;
+        socket.join(boardId);
+    });
+
     socket.on('update', (data) => {
         console.log('message received: ', data);
         console.log('broadcasting... ');
@@ -6,10 +15,10 @@ function onConnection(socket) {
     });
 }
 
-var socket = {};
-socket.configure = function(server) {
-    var io = require('socket.io')(server);
+var comm = {};
+comm.configure = function(server) {
+    io = require('socket.io')(server);
     io.on('connection', onConnection);
 }
 
-module.exports = socket;
+module.exports = comm;

@@ -26,7 +26,7 @@ app.use(webpackDevMiddleware(compiler, {
     publicPath: config.output.publicPath
 }));
 
-app.use('/', indexRouter);
+app.use('/board', indexRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
