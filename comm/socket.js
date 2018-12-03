@@ -10,8 +10,8 @@ function onConnection(socket) {
 
     socket.on('update', (data) => {
         console.log('message received: ', data);
-        console.log('broadcasting... ');
-        socket.broadcast.emit('update', data)
+        console.log('emiting to board: ', data.boardId);
+        socket.broadcas.to(data.boardId).emit('update', data)
     });
 }
 

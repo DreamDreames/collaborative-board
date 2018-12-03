@@ -6,7 +6,7 @@ var router = express.Router();
 router.get('/:boardId', function(req, res, next) {
     let params = req.params || {};
     let boardId = params['boardId'];
-    console.log(boardId);
+    console.log('boardId:', boardId);
     res.sendFile(path.resolve('views/index.html'));
 });
 

@@ -19,6 +19,7 @@ export default {
     data() {
         return {
             socket: io(),
+            boardId: undefined,
             code: 'const A = 10',
             cmOption: { 
                 tabSize: 4,
@@ -43,11 +44,13 @@ export default {
         this.configureSocket();
     },
     mounted: function() {
+        console.log(this.$route);
+        this.boardId = this.$route.params.boardId;
         this.$refs.cm.codemirror.on('change', this.onChange);
     },
     methods: {
         getBoardId: function() {
-            return 'abc';
+            return this.boardId;
         },
         joinBoard: function() {
             let id = this.getBoardId();
@@ -68,7 +71,10 @@ export default {
             console.log("input changed: ", cm.getValue()); 
             if(changeObj.origin != 'setValue') {
                 console.log("emiting message: ", cm.getValue());
-                this.socket.emit('update', {message: cm.getValue()});
+                this.socket.emit('update', {
+                    message: cm.getValue(), 
+                    boardId: this.boardId
+                });
             }
             else {
                 console.log("not emiting message");
