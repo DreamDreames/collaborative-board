@@ -5,13 +5,16 @@ function onConnection(socket) {
             socket.leave(socket.boardId);
         }
         socket.boardId = boardId;
-        socket.join(boardId);
+        console.log("joining room: ", boardId);
+        socket.join(boardId, () => {
+            let rooms = Object.keys(socket.rooms);
+            console.log("rooms: ", rooms);
+        });
     });
 
     socket.on('update', (data) => {
         console.log('message received: ', data);
-        console.log('emiting to board: ', data.boardId);
-        socket.broadcas.to(data.boardId).emit('update', data)
+        socket.broadcast.to(data.boardId).emit('update', data)
     });
 }
 

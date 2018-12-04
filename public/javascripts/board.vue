@@ -41,12 +41,12 @@ export default {
         }
     },
     created: function() {
-        this.configureSocket();
-    },
-    mounted: function() {
         console.log(this.$route);
         this.boardId = this.$route.params.boardId;
+    },
+    mounted: function() {
         this.$refs.cm.codemirror.on('change', this.onChange);
+        this.configureSocket();
     },
     methods: {
         getBoardId: function() {
@@ -54,6 +54,7 @@ export default {
         },
         joinBoard: function() {
             let id = this.getBoardId();
+            console.log("boardId: ", id);
             this.socket.emit('join', {boardId: id});
         },
         listenUpdate: function() {
