@@ -106,6 +106,14 @@ export default {
                 console.log("receiving message and updating: ", data);
                 self.code = data.message;
             });
+            this.socket.on('language', function(data) {
+                self.updateLanguage(data.language);
+            })
+        },
+        updateLanguage: function(language) {
+            console.log('updating language to: ', language);
+            this.curLanguage = language;
+            this.cmOption.mode = this.languageModes[language]; 
         },
         configureSocket: function() {
             this.joinBoard();
@@ -125,8 +133,7 @@ export default {
             }
         },
         onLanChange: function(language) {
-            this.curLanguage = language;
-            this.cmOption.mode = this.languageModes[language];
+            this.updateLanguage(language);
             this.socket.emit('language', {
                 language: language,
                 boardId: this.boardId

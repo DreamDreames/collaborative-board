@@ -1,7 +1,7 @@
 function onConnection(socket) {
     socket.on('join', (data) => {
         let boardId = data.boardId;
-        if(socket.boardId) {
+        if (socket.boardId) {
             socket.leave(socket.boardId);
         }
         socket.boardId = boardId;
@@ -14,7 +14,12 @@ function onConnection(socket) {
 
     socket.on('update', (data) => {
         console.log('message received: ', data);
-        socket.broadcast.to(data.boardId).emit('update', data)
+        socket.broadcast.to(data.boardId).emit('update', data);
+    });
+
+    socket.on('language', (data) => {
+        console.log('language update message recieved:', data);
+        socket.broadcast.to(data.boardId).emit('language', data);
     });
 }
 
