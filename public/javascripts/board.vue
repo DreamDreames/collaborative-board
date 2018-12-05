@@ -127,6 +127,10 @@ export default {
         onLanChange: function(language) {
             this.curLanguage = language;
             this.cmOption.mode = this.languageModes[language];
+            this.socket.emit('language', {
+                language: language,
+                boardId: this.boardId
+            })
         }
     }
 }

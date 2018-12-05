@@ -5,3 +5,11 @@
 dropdown-menu a:hover {
     cursor: pointer;
 }
+
+#dropdownMenuButton {
+    min-width: 10rem;
+}
+
+.dropdown-toggle {
+    text-align: right;
+}
