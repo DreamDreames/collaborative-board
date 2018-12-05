@@ -1,16 +1,45 @@
 <template>
-    <codemirror ref='cm'
-                :value="code" 
-                :options="cmOption"
-                @change="onChange">
-    </codemirror>
+<div> 
+    <div class="row"> 
+        <div class="col-12 col-md-6 col-xl d-flex"> 
+            <div class="card flex-fill"> 
+                <div class="card-body py-2"> 
+                    <div class="row"> 
+                        <codemirror ref='cm' 
+                                    :value="code" 
+                                    :options="cmOption" 
+                                    @change="onChange" > 
+                        </codemirror>                                        
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+    <div class="clearfix">
+        <div class="dropdown float-right mt--1 d-none d-md-flex"> 
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                {{ curLanguage }}
+            </button> 
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> 
+                <a v-for="lang in languages" :key="lang" class="dropdown-item" @click="onLanChange(lang)" href="#">{{ lang }}</a>
+            </div> 
+        </div>
+    </div>
+</div>
 </template>
 
 <script>
+import _ from 'lodash'
 import { codemirror } from 'vue-codemirror'
 import 'codemirror/lib/codemirror.css'
+import 'codemirror/theme/monokai.css'
 import 'codemirror/keymap/sublime'
+import 'codemirror/mode/clike/clike.js'
+import 'codemirror/mode/javascript/javascript.js'
+import 'codemirror/mode/python/python.js'
 import io from 'socket.io-client'
+import '../stylesheets/cm.css'
+
 
 export default { 
     components: { 
@@ -21,6 +50,14 @@ export default {
             socket: io(),
             boardId: undefined,
             code: 'const A = 10',
+            languageModes: {
+                'c': 'text/x-csrc',
+                'c++': 'text/x-c++src',
+                'java': 'text/x-java',
+                'javascript': 'text/javascript',
+                'python': 'text/x-python'
+            },
+            curLanguage: 'java',
             cmOption: { 
                 tabSize: 4,
                 styleActiveLine: true,
@@ -28,7 +65,7 @@ export default {
                 line: true,
                 foldGutter: true,
                 styleSelectedText: true,
-                mode: 'text/javascript',
+                mode: 'text/x-java',
                 keyMap: "sublime",
                 matchBrackets: true,
                 showCursorWhenSelecting: true,
@@ -36,7 +73,8 @@ export default {
                 extraKeys: { "Ctrl": "autocomplete" },
                 hintOptions:{
                   completeSingle: false
-                }
+                },
+                viewportMargin: Infinity
             }
         }
     },
@@ -47,6 +85,11 @@ export default {
     mounted: function() {
         this.$refs.cm.codemirror.on('change', this.onChange);
         this.configureSocket();
+    },
+    computed: {
+        languages: function() {
+            return _.keys(this.languageModes);
+        },
     },
     methods: {
         getBoardId: function() {
@@ -80,6 +123,10 @@ export default {
             else {
                 console.log("not emiting message");
             }
+        },
+        onLanChange: function(language) {
+            this.curLanguage = language;
+            this.cmOption.mode = this.languageModes[language];
         }
     }
 }

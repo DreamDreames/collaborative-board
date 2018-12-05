@@ -1,0 +1,7 @@
+.vue-codemirror {
+    width: 100%;
+}
+
+dropdown-menu a:hover {
+    cursor: pointer;
+}
