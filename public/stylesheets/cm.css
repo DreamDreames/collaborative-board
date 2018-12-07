@@ -2,8 +2,9 @@
     width: 100%;
 }
 
-dropdown-menu a:hover {
+li.sidebar-item a:hover {
     cursor: pointer;
+    text-decoration: none;
 }
 
 #dropdownMenuButton {
