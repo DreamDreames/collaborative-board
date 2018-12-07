@@ -2,6 +2,17 @@
     width: 100%;
 }
 
+.CodeMirror {
+    /* Firefox */
+    height: -moz-calc(100vh - 190px);
+    /* WebKit */
+    height: -webkit-calc(100vh - 190px);
+    /* Opera */
+    height: -o-calc(100vh - 190px);
+    /* Standard */
+    height: calc(100vh - 190px);
+}
+
 li.sidebar-item a:hover {
     cursor: pointer;
     text-decoration: none;
