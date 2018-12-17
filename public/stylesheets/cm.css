@@ -4,13 +4,13 @@
 
 .CodeMirror {
     /* Firefox */
-    height: -moz-calc(100vh - 190px);
+    height: -moz-calc(90vh - 190px);
     /* WebKit */
-    height: -webkit-calc(100vh - 190px);
+    height: -webkit-calc(90vh - 190px);
     /* Opera */
-    height: -o-calc(100vh - 190px);
+    height: -o-calc(90vh - 190px);
     /* Standard */
-    height: calc(100vh - 190px);
+    height: calc(90vh - 190px);
 }
 
 li.sidebar-item a:hover {
