@@ -23,6 +23,7 @@
         "morgan": "~1.9.0",
         "npm": "^6.4.1",
         "popper.js": "^1.14.6",
+        "redis": "^2.8.0",
         "smartwizard": "^4.3.1",
         "socket.io": "^2.1.1",
         "socket.io-client": "^2.1.1",

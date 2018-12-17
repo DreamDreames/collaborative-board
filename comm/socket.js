@@ -1,3 +1,5 @@
+var store = require("../storage/store");
+
 function onConnection(socket) {
     socket.on('join', (data) => {
         let boardId = data.boardId;
@@ -10,16 +12,19 @@ function onConnection(socket) {
             let rooms = Object.keys(socket.rooms);
             console.log("rooms: ", rooms);
         });
+        let content = store.getBoard(boardId);
     });
 
     socket.on('update', (data) => {
         console.log('message received: ', data);
         socket.broadcast.to(data.boardId).emit('update', data);
+        store.updateBoard(data.boardId, data);
     });
 
     socket.on('language', (data) => {
         console.log('language update message recieved:', data);
         socket.broadcast.to(data.boardId).emit('language', data);
+        store.updateBoard(data.boardId, data);
     });
 }
 
